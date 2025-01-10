@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stages {
+        stage('Execute playbook') {
+            steps {
+                ansiblePlaybook colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: '/tmp/ansible/hosts', playbook: '/tmp/ansible/marioplaybook.yml', vaultTmpPath: ''
+            }
+        }
+    }
+}
