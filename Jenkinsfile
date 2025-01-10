@@ -1,14 +1,28 @@
+#!groovy
+
+windowsNode = 'windows'
+
 pipeline {
-  agent any
+  agent none
   stages {
     stage('Stage 1') {
+      agent {
+        label windowsNode
+      }
       steps {
-        sh '/tmp/hello.sh'
+        script {
+          // all subsequent steps should be run on the same windows node
+          windowsNode = NODE_NAME
+        }
+        echo "windowsNode: $windowsNode, NODE_NAME: $NODE_NAME"
       }
     }
     stage('Stage 2') {
+      agent {
+        label windowsNode
+      }
       steps {
-        sh '/tmp/hello.sh'
+        echo "windowsNode: $windowsNode, NODE_NAME: $NODE_NAME"
       }
     }
   }
